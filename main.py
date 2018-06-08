@@ -1,9 +1,19 @@
 import requests
 import json
+import os
+import sys
 
-weather_key = 'b23a723ded22b73ca842f89940aac7d0'
-telegram_key = '617530729:AAGS4jp0eHv5jAvIkvzbr5TGmTcriIqUzzw'
-yandex_translate_key = 'trnsl.1.1.20180608T081728Z.5684da981c2a602d.7822398cfcda6dbcde646aa60813bcac2478b205'
+if os.path.isfile('keys.txt'):
+	file = open('keys.txt', 'r')
+	file = file.read()
+	file.split('\n')
+	weather_key = file[0]
+	telegram_key = file[1]
+	yandex_translate_key = file[2]
+	print('API Keys успешно загружены!') 
+else:
+	print('Ошибка! Файл с API Keys не найден!')
+	sys.exit()
 
 
 
