@@ -9,7 +9,7 @@ from enum import Enum
 if os.path.isfile('keys.txt'):
     file = open('keys.txt', 'r')
     file = file.read()
-    file.split('\n')
+    file = file.split('\n')
     weather_key = file[0]
     telegram_key = file[1]
     yandex_translate_key = file[2]
@@ -22,9 +22,13 @@ def sendLocation(i):
     print(i.location)
     lat = i.location.latitude
     lon = i.location.longitude
-    weatherMessage = main.GetWeatherMessage(lat, lon)
+    weatherMessage = main.GetPlaceInfoMessage(lat, lon)
     print(weatherMessage)
     tgf.bot.send_message(i.chat.id, weatherMessage)
+    places_list = main.GetRandomNearestPlace(lat, lon)
+    if(len(places_list)):
+        tgf.bot.send_message(i.chat.id, "Ближайшая локация '" + places_list[2] +"' рядом с вами - " + places_list[3])
+        tgf.bot.send_location(i.chat.id, places_list[0], places_list[1])
     return States.WEATHER
 
 class States(Enum):
