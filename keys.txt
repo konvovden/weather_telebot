@@ -1,3 +1,3 @@
-b23a723ded22b73ca842f89940aac7d0
+*openweather API key*
 *telegram API key*
 *yandex translator API key*
