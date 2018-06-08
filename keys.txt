@@ -1,3 +1,4 @@
-1
+*openweather API key*
 *telegram API key*
 *yandex translator API key*
+*Google API key*
