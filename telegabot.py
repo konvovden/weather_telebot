@@ -5,23 +5,28 @@ from tgflow import handles as h
 from enum import Enum
 key='617530729:AAGS4jp0eHv5jAvIkvzbr5TGmTcriIqUzzw'
 
-def sendLocation(i):    
-    lat = i.latitude
-    lon = i.longitude
+def sendLocation(i): 
+    print(i.location)
+    lat = i.location.latitude
+    lon = i.location.longitude
     weatherMessage = main.GetWeatherMessage(lat, lon)
-    tgf.bot.send_message(weatherMessage)
+    print(weatherMessage)
+    tgf.bot.send_message(i.chat.id, weatherMessage)
+    return States.WEATHER
 
 class States(Enum):
-    START=1
+    START=1,
+    WEATHER=2
 
 UI = {
     States.START:
     {'t':'Это бот, который показывает погоду по геопозиции! Выберите нужную точку на карте, чтобы узнать там текущую погоду!',
-        "react":h.action(sendLocation, react_to = 'location')}}
+        "react":h.action(sendLocation, react_to = 'location')},
+    States.WEATHER:
+    {"react":h.action(sendLocation, react_to = 'location')}}
 
 tgf.configure(token=key,
-                 state=States.START,
-                 data={"foo":'bar'})
+                 state=States.START)
 tgf.start(UI)
 
 """
